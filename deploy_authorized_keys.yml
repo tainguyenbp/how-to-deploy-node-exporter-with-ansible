@@ -1,0 +1,11 @@
+- hosts: deploy-node-exporter-centos
+  user: root
+  gather_facts: yes
+  roles:
+  - role: node-exporter-centos6
+    when: ansible_os_family == 'SHMZ'  and ansible_distribution_major_version == '6'
+  - role: node-exporter-centos6
+    when: ansible_os_family == 'RedHat'  and ansible_distribution_major_version == '6'
+  - role: node-exporter-centos7
+    when: ansible_os_family == 'RedHat' and ansible_distribution_major_version == '7'
+

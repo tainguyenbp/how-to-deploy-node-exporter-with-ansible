@@ -1,0 +1,6 @@
+path_node_exporter_src_dir: /etc/node_exporter/node_exporter-0.18.1.linux-amd64/
+path_file_node_exporter_src_dir: /etc/node_exporter/node_exporter-0.18.1.linux-amd64/node_exporter
+name_node_exporter_src: node_exporter-0.18.1.linux-amd64.tar.gz
+path_node_exporter_system: /etc/node_exporter/
+path_file_node_exporter_system: /etc/node_exporter/node_exporter
+path_init_serivce: /etc/systemd/system/node_exporter.service

@@ -1,0 +1,63 @@
+- name: Create the user node_exporter
+  user:
+    name: node_exporter
+    createhome: no
+    shell: /bin/false
+    state: present
+
+- name: Creates directory node_exporter
+  file:
+    path: /etc/node_exporter
+    state: directory
+    owner: node_exporter
+    group: node_exporter
+
+- name: Extract file setup node_exporter
+  unarchive: 
+    src: '{{ name_node_exporter_src }}'
+    dest: '{{ path_node_exporter_system }}'
+
+- name: copy file source code node_exporter
+  copy:
+    src: '{{ path_file_node_exporter_src_dir }}'
+    dest: '{{ path_file_node_exporter_system }}'
+    remote_src: yes
+
+- name: Copy file init service node_exporter
+  template:
+    src: node_exporter.service
+    dest: '{{ path_init_serivce }}'
+
+- name: add execute permission for node_exporter.service
+  file:
+    dest: '{{ path_init_serivce }}'
+    mode: +x
+
+- name: Changing provide the ownership of node_exporter
+  file:
+    dest: '{{ path_node_exporter_system }}'
+    state: directory
+    owner: node_exporter
+    group: node_exporter
+    recurse: yes
+
+- name: add execute permission for node_exporter
+  file:
+    dest: '{{ path_file_node_exporter_system }}'
+    mode: +x
+
+- name: Enable service node_exporter, and not touch the state
+  service:
+    name: node_exporter
+    enabled: yes
+    masked: no
+
+- name: Start service node_exporter, if not started
+  service:
+    name: node_exporter
+    state: started
+
+- name: Restart service node_exporter, in all cases
+  service:
+    name: node_exporter
+    state: restarted
